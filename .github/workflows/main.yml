@@ -1,22 +1,15 @@
-name: Android Gradle Build
-on: [push]
+name: Build Gradle project
+
+on:
+  push:
+
 jobs:
-  build:
+  build-gradle-project:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install Android SDK
-        uses: android-actions/setup-android@v2
-        with:
-          sdk-version: '31.0.0'
-
-      - name: Build project
-        run: ./gradlew build
-
-      - name: Publish artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+    - name: Checkout project sources
+      uses: actions/checkout@v2
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+    - name: Run build with Gradle Wrapper
+      run: ./gradlew build
